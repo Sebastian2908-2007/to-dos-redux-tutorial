@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+// import saveNewTodo middleware function
+import { saveNewTodo } from '../todos/todosSlice';
 
 const Header = () => {
   const [text, setText] = useState('');
@@ -9,11 +11,13 @@ const Header = () => {
 
   // if a user presses enter dispatch with our text as the payload and clear the text
   const handleKeyDown = e => {
-      const trimmedText = e.target.value.trim();
+      const trimmedText = text.trim();
       // if user pressed enter on keyboard
-      if(e.key === 'Enter' && trimmedText) {
-         // Dispatch th 'todo added' Action with this text
-         dispatch({ type: 'todos/todoAdded', payload: trimmedText });
+      if(e.which === 13 && trimmedText) {
+         
+         
+         // Dispatch thunk function from todoslice.js with our text value
+         dispatch(saveNewTodo(trimmedText));
          // and clear text out of the input
          setText('');
       }
