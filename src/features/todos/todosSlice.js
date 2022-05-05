@@ -105,24 +105,37 @@ export const selectTodoIds = createSelector(
     todos => todos.map(todo => todo.id)
 );
 
+export const selectTodos = state => state.todos;
+
+export const selectTodoById = (state, todoId) => {
+    return selectTodos(state).find(todo => todo.id === todoId);
+};
+
 //memoized selector that returns that filtered list of todos.
+
 export const selectFilteredTodos = createSelector(
     // First input selector: all todos
-    state => state.todos,
-    // Second input selector: current status filter
-    state => state.filters.status,
-    // Output selector: recieves both values
-    (todos, status) => {
-        // status filters All selected returns all todos
-        if (status === StatusFilters.All) {
-            return todos;
-        }
- 
-        const completedStatus = status === StatusFilters.Completed;
-               // Return either active or completed todos based on filter   
-               return todos.filter(todo => todo.completed === completedStatus)
+    selectTodos,
+    // Second input selector: all filter values
+    state => state.filters,
+    // Output selector: receives both values
+    (todos, filters) => {
+      const { status, colors } = filters
+      const showAllCompletions = status === StatusFilters.All
+      if (showAllCompletions && colors.length === 0) {
+        return todos
+      }
+  
+      const completedStatus = status === StatusFilters.Completed
+      // Return either active or completed todos based on filter
+      return todos.filter(todo => {
+        const statusMatches =
+          showAllCompletions || todo.completed === completedStatus
+        const colorMatches = colors.length === 0 || colors.includes(todo.color)
+        return statusMatches && colorMatches
+      })
     }
-);
+  )
 
 // use "selectFilteredTodos" selector as an input to another selector that returns the IDs of those todos:
 export const selectFilteredTodoIds = createSelector(
