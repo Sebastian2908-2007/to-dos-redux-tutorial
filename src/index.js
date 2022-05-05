@@ -9,7 +9,7 @@ import './api/server';
 import store from './store';
 import { fetchTodos } from './features/todos/todosSlice';
 // this will fetch some fake todos from our fake db
-store.dispatch(fetchTodos);
+store.dispatch(fetchTodos());
 
 
 

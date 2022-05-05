@@ -9,7 +9,7 @@ const Header = () => {
 
   const handleChange = (e) => setText(e.target.value);
 
-  // if a user presses enter dispatch with our text as the payload and clear the text
+  // if a user presses enter dispatch with our text and 'ThunK function' as the payload and clear the text
   const handleKeyDown = e => {
       const trimmedText = text.trim();
       // if user pressed enter on keyboard
