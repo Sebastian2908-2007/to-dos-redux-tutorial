@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ReactComponent as TimesSolid } from './times-solid.svg';
 
 import { availableColors, capitalize } from '../filters/colors';
+import { selectTodos } from './todosSlice';
 
 const selectTodoById = (state, todoId) => {
-    return state.todos.find(todo => todo.id === todoId);
+    return selectTodos(state).find(todo => todo.id === todoId);
 };
 
 // Destructure `props.id` , since we only need the ID value
