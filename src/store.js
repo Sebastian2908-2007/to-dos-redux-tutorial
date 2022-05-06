@@ -1,13 +1,17 @@
-import { createStore, applyMiddleware } from "redux";
-// the thunk middle ware will allow us to do async activities with functions in a dispatch() call before getting to the reducer,allowing the async functions logic to dispatch the reducer when its done with its bussiness
-import thunkMiddleware from 'redux-thunk';
-// this will allow us to use redux dev tools extension
-import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from './reducer';
+import {configureStore } from "@reduxjs/toolkit";
+import todosReducer from "./features/todos/todosSlice";
+import filtersReducer from "./features/filters/filtersSlice";
 
 
-const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-const store = createStore(rootReducer, composedEnhancer);
+
+
+const store = configureStore({
+    reducer: {
+        // Define a top-level state field named `todos`, handled by todosReducer
+        todos: todosReducer,
+        filters: filtersReducer
+    }
+});
 
 export default store;
