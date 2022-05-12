@@ -25,6 +25,6 @@ function App() {
     </div>
   )
 }
-// I renamed some branches hope I didnt mess thing up
+
 
 export default App
