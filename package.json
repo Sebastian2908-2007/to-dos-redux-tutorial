@@ -2,7 +2,7 @@
   "name": "to-dos-redux-tutorial",
   "version": "1.0.0",
   "description": "An app that uses redux to help you keep track of what to do.",
-  "main": "src/api/server.js",
+  "homepage": "http://sebastian2908-2007.github.io/to-dos-redux-tutorial",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -22,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "prettier": "^2.0.2"
   }
 }
