@@ -1,7 +1,8 @@
 {
   "name": "to-dos-redux-tutorial",
   "version": "1.0.0",
-  "private": true,
+  "description": "An app that uses redux to help you keep track of what to do.",
+  "main": "src/api/server.js",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^4.2.4",
