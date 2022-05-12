@@ -9,12 +9,12 @@ function App() {
     <div className="App">
       <nav>
         <section>
-          <h1>Redux Fundamentals Example</h1>
+          <h1>Sebastian's Redux todo tracker</h1>
         </section>
       </nav>
       <main>
         <section className="medium-container">
-          <h2>Todos</h2>
+          <h2>Stuff to do</h2>
           <div className="todoapp">
             <Header />
             <TodoList />
