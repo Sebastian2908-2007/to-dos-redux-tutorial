@@ -1,40 +1,38 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { ReactComponent as TimesSolid } from './times-solid.svg';
 
-import { availableColors, capitalize } from '../filters/colors';
-import { selectTodos } from './todosSlice';
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-const selectTodoById = (state, todoId) => {
-    return selectTodos(state).find(todo => todo.id === todoId);
-};
+import { ReactComponent as TimesSolid } from './times-solid.svg'
 
-// Destructure `props.id` , since we only need the ID value
+import { availableColors, capitalize } from '../filters/colors'
+import {
+  todoColorSelected,
+  todoDeleted,
+  todoToggled,
+  selectTodoById,
+} from './todosSlice'
+
+// Destructure `props.id`, since we just need the ID value
 const TodoListItem = ({ id }) => {
-    // Call our `selectTodoById` with the state _and_ the ID value
-    const todo = useSelector(state => selectTodoById(state, id));
-  const { text, completed, color } = todo;
+  // Call our `selectTodoById` with the state _and_ the ID value
+  const todo = useSelector((state) => selectTodoById(state, id))
+  const { text, completed, color } = todo
 
-  const dispatch = useDispatch();
-
-  
+  const dispatch = useDispatch()
 
   const handleCompletedChanged = () => {
-    dispatch({ type: 'todos/todoToggled', payload: todo.id });
-  };
+    dispatch(todoToggled(todo.id))
+  }
 
   const handleColorChanged = (e) => {
-    const color = e.target.value;
-    dispatch({
-        type: 'todos/colorSelected',
-        payload: { todoId: todo.id, color },
-    });
-  };
+    const color = e.target.value
+    dispatch(todoColorSelected(todo.id, color))
+  }
 
   const onDelete = () => {
-    dispatch({ type: 'todos/todoDeleted', payload: todo.id });
-  };
+    dispatch(todoDeleted(todo.id))
+  }
 
   const colorOptions = availableColors.map((c) => (
     <option key={c} value={c}>
@@ -74,3 +72,4 @@ const TodoListItem = ({ id }) => {
 }
 
 export default TodoListItem
+

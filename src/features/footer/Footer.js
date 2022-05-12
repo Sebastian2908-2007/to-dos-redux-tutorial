@@ -1,9 +1,17 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { availableColors, capitalize } from '../filters/colors';
-import { StatusFilters, colorFilterChanged } from '../filters/filtersSlice';
-import { selectTodos } from '../todos/todosSlice';
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
+import { availableColors, capitalize } from '../filters/colors'
+import {
+  StatusFilters,
+  colorFilterChanged,
+  statusFilterChanged,
+} from '../filters/filtersSlice'
+import {
+  completedTodosCleared,
+  allTodosCompleted,
+  selectTodos,
+} from '../todos/todosSlice'
 
 const RemainingTodos = ({ count }) => {
   const suffix = count === 1 ? '' : 's'
@@ -75,35 +83,35 @@ const ColorFilters = ({ value: colors, onChange }) => {
 }
 
 const Footer = () => {
-    const dispatch = useDispatch();
-  const todosRemaining = useSelector(state => {
-      const uncompletedTodos = selectTodos(state).filter(todo => !todo.completed);
-      return uncompletedTodos.length;
-  });
+  const dispatch = useDispatch()
 
-  const { status, colors } = useSelector(state => state.filters)
+  const todosRemaining = useSelector((state) => {
+    const uncompletedTodos = selectTodos(state).filter(
+      (todo) => !todo.completed
+    )
+    return uncompletedTodos.length
+  })
 
-  // mark all completed dispatch function
-  const onMarkCompletedClicked = () => dispatch({ type: 'todos/allCompleted' });
+  const { status, colors } = useSelector((state) => state.filters)
 
-  // clear all completed dispatch function
-  const onClearCompletedClicked = () =>
-  dispatch({ type: 'todos/completedCleared' });
+  const onMarkCompletedClicked = () => dispatch(allTodosCompleted())
+  const onClearCompletedClicked = () => dispatch(completedTodosCleared())
 
-  // function to pass to our colorFilters functional component here we are using an action creator from filtersSlice to dispatch our data
-const onColorChange = (color, changeType) =>
- dispatch(colorFilterChanged(color, changeType));
+  const onColorChange = (color, changeType) =>
+    dispatch(colorFilterChanged(color, changeType))
 
-// function to pass to our statusFilter functional component
-const onStatusChange = (status) => 
-dispatch({ type: 'filters/statusFilterChanged', payload: status });
+  const onStatusChange = (status) => dispatch(statusFilterChanged(status))
 
   return (
     <footer className="footer">
       <div className="actions">
         <h5>Actions</h5>
-        <button className="button" onClick={onMarkCompletedClicked}>Mark All Completed</button>
-        <button className="button" onClick={onClearCompletedClicked}>Clear Completed</button>
+        <button className="button" onClick={onMarkCompletedClicked}>
+          Mark All Completed
+        </button>
+        <button className="button" onClick={onClearCompletedClicked}>
+          Clear Completed
+        </button>
       </div>
 
       <RemainingTodos count={todosRemaining} />
@@ -114,3 +122,4 @@ dispatch({ type: 'filters/statusFilterChanged', payload: status });
 }
 
 export default Footer
+
